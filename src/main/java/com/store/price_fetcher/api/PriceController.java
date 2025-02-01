@@ -31,6 +31,6 @@ public class PriceController {
         price.ifPresent(p -> System.out.println(p.toString()));
         
         return price.map(ResponseEntity::ok)
-                    .orElseGet(() -> ResponseEntity.notFound().build());
+                    .orElseGet(() -> ResponseEntity.noContent().build());
     }
 }

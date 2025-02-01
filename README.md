@@ -40,7 +40,7 @@ The H2 console can be accessed at [http://localhost:8080/h2-console](http://loca
 - **Password**: `password`
 
 ### API Endpoints
-- **Get Price by Product ID and Date/Time**: Fetches the price for a given product ID and date/time range.
+- **Get Price by Product ID and Date/Time**: Fetches the price for a given product ID, brand ID and a date/time range.
     - **URL**: `/prices`
     - **Method**: `GET`
     - **Parameters**:
@@ -53,4 +53,4 @@ The H2 console can be accessed at [http://localhost:8080/h2-console](http://loca
 
 #### Fetch Price
 ```sh
-curl -X GET "http://localhost:8080/prices?productId=35455&dateTime=2020-06-15T10:00:00"
+curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-18T10:00:00"
