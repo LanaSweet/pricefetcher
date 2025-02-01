@@ -1,4 +1,4 @@
-package com.store.price_fetcher.infrastructure;
+package com.store.price_fetcher.infrastructure.adapters.outbound;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.store.price_fetcher.domain.model.Price;
-import com.store.price_fetcher.domain.repositories.PriceRepository;
+import com.store.price_fetcher.application.ports.outbounds.PriceRepository;
+import com.store.price_fetcher.domain.entities.Price;
 
 @Repository
 public class PriceRepositoryImpl implements PriceRepository {

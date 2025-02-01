@@ -1,4 +1,4 @@
-package com.store.price_fetcher.application;
+package com.store.price_fetcher.application.services;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -6,16 +6,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.store.price_fetcher.api.PriceDTO;
-import com.store.price_fetcher.domain.model.Price;
-import com.store.price_fetcher.domain.repositories.PriceRepository;
+import com.store.price_fetcher.application.dto.PriceDTO;
+import com.store.price_fetcher.application.ports.inbound.PriceService;
+import com.store.price_fetcher.application.ports.outbounds.PriceRepository;
+import com.store.price_fetcher.domain.entities.Price;
 
 import lombok.extern.slf4j.Slf4j;
 
 
 @Service
 @Slf4j
-public class PriceService {
+public class PriceServiceImpl implements PriceService{
 
     @Autowired
     private PriceRepository priceRepository;

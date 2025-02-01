@@ -1,4 +1,4 @@
-package com.store.price_fetcher.infrastructure;
+package com.store.price_fetcher.infrastructure.adapters.outbound;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.store.price_fetcher.domain.model.Price;
+import com.store.price_fetcher.domain.entities.Price;
 
 public interface JpaPriceRepository extends JpaRepository<Price, Long> {
 

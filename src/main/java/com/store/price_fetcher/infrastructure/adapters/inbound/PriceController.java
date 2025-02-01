@@ -1,4 +1,4 @@
-package com.store.price_fetcher.api;
+package com.store.price_fetcher.infrastructure.adapters.inbound;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.store.price_fetcher.application.PriceService;
+import com.store.price_fetcher.application.dto.PriceDTO;
+import com.store.price_fetcher.application.ports.inbound.PriceControllerPort;
+import com.store.price_fetcher.application.services.PriceServiceImpl;
 
 @RestController
-public class PriceController {
+public class PriceController implements PriceControllerPort{
 
     @Autowired
-    private PriceService priceService;
+    private PriceServiceImpl priceService;
 
+    @Override
     @GetMapping("/prices")
     public ResponseEntity<PriceDTO> getPrice(
         @RequestParam int productId,
@@ -33,4 +36,5 @@ public class PriceController {
         return price.map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.noContent().build());
     }
+
 }

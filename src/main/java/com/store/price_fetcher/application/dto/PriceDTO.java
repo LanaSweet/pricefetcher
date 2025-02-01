@@ -1,4 +1,4 @@
-package com.store.price_fetcher.api;
+package com.store.price_fetcher.application.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.store.price_fetcher.domain.model;
+package com.store.price_fetcher.domain.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
