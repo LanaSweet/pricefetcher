@@ -44,8 +44,9 @@ The H2 console can be accessed at [http://localhost:8080/h2-console](http://loca
     - **URL**: `/prices`
     - **Method**: `GET`
     - **Parameters**:
-        - `productId`: The ID of the product (required)
         - `dateTime`: The specific date/time to fetch the price for (required)
+        - `productId`: The ID of the product (required)
+        - `brandId`: The ID of the brand (required)
     - **Response**: JSON object containing the price details
 
 ### Example Requests
