@@ -41,7 +41,6 @@ public class PriceControllerTest {
         priceDTO.setStartDate(dateTime);
         priceDTO.setEndDate(dateTime.minusMonths(1));
         priceDTO.setPriceList(1);
-        priceDTO.setPriority(1);
         priceDTO.setPrice(new BigDecimal(100.0));
         priceDTO.setCurr("USD");
     }

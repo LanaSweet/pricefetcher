@@ -1,13 +1,14 @@
 # Price Fetching Microservice
 
 ## Overview
-This project is a Spring Boot microservice that retrieves prices for products within a specific timeframe. It leverages an H2 in-memory database for storage and provides RESTful endpoints for querying the data.
+This project is a Spring Boot microservice that retrieves prices for products within a specific timeframe. It leverages an H2 in-memory database for storage and provides RESTful endpoint for querying the data.
 
 ## Features
 - Fetch prices based on product ID and specific date/time range
 - In-memory H2 database
 - RESTful API endpoints
 - Easy setup and configuration
+- Swagger API documentation
 
 ## Getting Started
 
@@ -53,4 +54,8 @@ The H2 console can be accessed at [http://localhost:8080/h2-console](http://loca
 
 #### Fetch Price
 ```sh
-curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-18T10:00:00"
+curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T10:00:00"
+curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T16:00:00"
+curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T21:00:00"
+curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-15T10:00:00"
+curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-16T21:00:00"

@@ -13,7 +13,6 @@ public class PriceDTO {
     private LocalDateTime endDate;
     private int priceList;
     private int productId;
-    private int priority;
     private BigDecimal price;
     private String curr;
 

@@ -52,7 +52,6 @@ public class PriceServiceImplTest {
         priceDTO.setStartDate(price.getStartDate());
         priceDTO.setEndDate(price.getEndDate());
         priceDTO.setPriceList(1);
-        priceDTO.setPriority(1);
         priceDTO.setPrice(new BigDecimal(100.0));
         priceDTO.setCurr("USD");
     }

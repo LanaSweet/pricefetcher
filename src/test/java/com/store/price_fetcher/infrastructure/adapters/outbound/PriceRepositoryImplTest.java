@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.store.price_fetcher.domain.entities.Price;
-import com.store.price_fetcher.domain.exceptions.EntityNotFoundException;
+import com.store.price_fetcher.domain.exceptions.PriceNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class PriceRepositoryImplTest {
@@ -53,13 +53,14 @@ public class PriceRepositoryImplTest {
 
         assertTrue(result.isPresent());
         assertEquals(price, result.get());
+        
     }
 
     @Test
     public void testFindPrice_EntityNotFoundException() {
         when(jpaPriceRepository.findPrice(1, 1, dateTime)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> {
+        assertThrows(PriceNotFoundException.class, () -> {
             priceRepositoryImpl.findPrice(1, 1, dateTime);
         });
     }

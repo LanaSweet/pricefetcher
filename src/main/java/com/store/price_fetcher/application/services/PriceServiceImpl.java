@@ -13,7 +13,7 @@ import com.store.price_fetcher.application.dto.PriceDTO;
 import com.store.price_fetcher.application.ports.inbound.PriceService;
 import com.store.price_fetcher.application.ports.outbounds.PriceRepository;
 import com.store.price_fetcher.domain.entities.Price;
-import com.store.price_fetcher.domain.exceptions.EntityNotFoundException;
+import com.store.price_fetcher.domain.exceptions.PriceNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +31,7 @@ public class PriceServiceImpl implements PriceService {
             log.info("Fetching price from database for productId: {} and brandId: {}", productId, brandId);
             Optional<Price> price = priceRepository.findPrice(productId, brandId, dateTime);
             return price.map(this::convertToDTO);
-        } catch (EntityNotFoundException e) {
+        } catch (PriceNotFoundException e) {
             log.warn("Entity not found: {}", e.getMessage());
             return Optional.empty();
         }    
@@ -44,7 +44,6 @@ public class PriceServiceImpl implements PriceService {
         priceDTO.setEndDate(price.getEndDate());
         priceDTO.setPriceList(price.getPriceList());
         priceDTO.setProductId(price.getProductId());
-        priceDTO.setPriority(price.getPriority());
         priceDTO.setPrice(price.getPrice());
         priceDTO.setCurr(price.getCurr());
         return priceDTO;
