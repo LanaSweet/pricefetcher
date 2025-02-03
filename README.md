@@ -36,7 +36,7 @@ This project is a Spring Boot microservice that retrieves prices for products wi
     ```
 
 ### Accessing the H2 Console
-The H2 console can be accessed at [http://localhost:8080/h2-console](http://localhost:8080/h2-console).
+The H2 console can be accessed at [https://localhost:8080/h2-console](http://localhost:8080/h2-console).
 - **JDBC URL**: `jdbc:h2:mem:testdb`
 - **Username**: `sa`
 - **Password**: `password`
