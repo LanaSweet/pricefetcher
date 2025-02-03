@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import com.store.price_fetcher.application.dto.PriceDTO;
-import com.store.price_fetcher.application.ports.inbound.PriceService;
+import com.store.price_fetcher.domain.services.PriceService;
 
 @ExtendWith(MockitoExtension.class)
 public class PriceControllerTest {

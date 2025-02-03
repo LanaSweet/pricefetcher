@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.store.price_fetcher.application.dto.PriceDTO;
 import com.store.price_fetcher.application.ports.inbound.PriceControllerPort;
-import com.store.price_fetcher.application.ports.inbound.PriceService;
+import com.store.price_fetcher.domain.services.PriceService;
 import com.store.price_fetcher.infrastructure.validators.DateTimeValidator;
 
 import io.swagger.v3.oas.annotations.Operation;

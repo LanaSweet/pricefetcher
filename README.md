@@ -9,6 +9,7 @@ This project is a Spring Boot microservice that retrieves prices for products wi
 - RESTful API endpoints
 - Easy setup and configuration
 - Swagger API documentation
+- Secure HTTPS connection
 
 ## Getting Started
 
@@ -54,8 +55,8 @@ The H2 console can be accessed at [http://localhost:8080/h2-console](http://loca
 
 #### Fetch Price
 ```sh
-curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T10:00:00"
-curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T16:00:00"
-curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T21:00:00"
-curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-15T10:00:00"
-curl -X GET "http://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-16T21:00:00"
+curl -X GET "https://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T10:00:00"
+curl -X GET "https://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T16:00:00"
+curl -X GET "https://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-14T21:00:00"
+curl -X GET "https://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-15T10:00:00"
+curl -X GET "https://localhost:8080/prices?productId=35455&brandId=1&dateTime=2020-06-16T21:00:00"

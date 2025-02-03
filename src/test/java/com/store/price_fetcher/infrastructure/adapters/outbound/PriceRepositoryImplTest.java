@@ -16,8 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.store.price_fetcher.domain.entities.Price;
 import com.store.price_fetcher.domain.exceptions.PriceNotFoundException;
+import com.store.price_fetcher.infrastructure.entities.PriceEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class PriceRepositoryImplTest {
@@ -28,13 +28,13 @@ public class PriceRepositoryImplTest {
     @InjectMocks
     private PriceRepositoryImpl priceRepositoryImpl;
 
-    private Price price;
+    private PriceEntity price;
     private LocalDateTime dateTime;
 
     @BeforeEach
     public void setUp() {
         dateTime = LocalDateTime.now();
-        price = new Price();
+        price = new PriceEntity();
         price.setBrandId(1);
         price.setProductId(1);
         price.setStartDate(dateTime.minusDays(10));
@@ -49,7 +49,7 @@ public class PriceRepositoryImplTest {
     public void testFindPrice_Success() {
         when(jpaPriceRepository.findPrice(1, 1, dateTime)).thenReturn(Optional.of(price));
 
-        Optional<Price> result = priceRepositoryImpl.findPrice(1, 1, dateTime);
+        Optional<PriceEntity> result = priceRepositoryImpl.findPrice(1, 1, dateTime);
 
         assertTrue(result.isPresent());
         assertEquals(price, result.get());

@@ -19,8 +19,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.store.price_fetcher.application.dto.PriceDTO;
+import com.store.price_fetcher.application.mappers.PriceMapper;
 import com.store.price_fetcher.application.ports.outbounds.PriceRepository;
-import com.store.price_fetcher.domain.entities.Price;
+import com.store.price_fetcher.domain.services.PriceServiceImpl;
+import com.store.price_fetcher.infrastructure.entities.PriceEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class PriceServiceImplTest {
@@ -28,54 +30,58 @@ public class PriceServiceImplTest {
     @Mock
     private PriceRepository priceRepository;
 
+    @Mock
+    private PriceMapper priceMapper;
+
     @InjectMocks
     private PriceServiceImpl priceService;
 
-    private Price price;
+    private PriceEntity priceEntity;
     private PriceDTO priceDTO;
+    private LocalDateTime dateTime;
 
     @BeforeEach
     public void setUp() {
-        price = new Price();
-        price.setBrandId(1);
-        price.setProductId(1);
-        price.setStartDate(LocalDateTime.now());
-        price.setEndDate(LocalDateTime.now().plusDays(1));
-        price.setPriceList(1);
-        price.setPriority(1);
-        price.setPrice(new BigDecimal(100.0));
-        price.setCurr("USD");
+        dateTime = LocalDateTime.now();
+        priceEntity = new PriceEntity();
+        priceEntity.setBrandId(1);
+        priceEntity.setProductId(1);
+        priceEntity.setStartDate(dateTime.minusDays(1));
+        priceEntity.setEndDate(dateTime.plusDays(1));
+        priceEntity.setPriceList(1);
+        priceEntity.setPriority(1);
+        priceEntity.setPrice(new BigDecimal(100.0));
+        priceEntity.setCurr("USD");
 
         priceDTO = new PriceDTO();
         priceDTO.setBrandId(1);
         priceDTO.setProductId(1);
-        priceDTO.setStartDate(price.getStartDate());
-        priceDTO.setEndDate(price.getEndDate());
-        priceDTO.setPriceList(1);
+        priceDTO.setStartDate(priceEntity.getStartDate());
         priceDTO.setPrice(new BigDecimal(100.0));
         priceDTO.setCurr("USD");
     }
 
     @Test
     public void testGetPrice() {
-        when(priceRepository.findPrice(1, 1, price.getStartDate())).thenReturn(Optional.of(price));
+        when(priceRepository.findPrice(1, 1, dateTime)).thenReturn(Optional.of(priceEntity));
+        when(priceMapper.toDto(priceMapper.toDomainObject(priceEntity))).thenReturn(priceDTO);
 
-        Optional<PriceDTO> result = priceService.getPrice(1, 1, price.getStartDate());
+        Optional<PriceDTO> result = priceService.getPrice(1, 1, dateTime);
 
         assertTrue(result.isPresent());
         assertEquals(priceDTO, result.get());
 
-        verify(priceRepository, times(1)).findPrice(1, 1, price.getStartDate());
+        verify(priceRepository, times(1)).findPrice(1, 1, dateTime);
     }
 
     @Test
     public void testGetPrice_NotFound() {
-        when(priceRepository.findPrice(1, 1, price.getStartDate())).thenReturn(Optional.empty());
+        when(priceRepository.findPrice(1, 1, dateTime)).thenReturn(Optional.empty());
 
-        Optional<PriceDTO> result = priceService.getPrice(1, 1, price.getStartDate());
+        Optional<PriceDTO> result = priceService.getPrice(1, 1, dateTime);
 
         assertFalse(result.isPresent());
 
-        verify(priceRepository, times(1)).findPrice(1, 1, price.getStartDate());
+        verify(priceRepository, times(1)).findPrice(1, 1, dateTime);
     }
 }

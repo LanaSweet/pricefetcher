@@ -1,9 +1,7 @@
-package com.store.price_fetcher.domain.entities;
+package com.store.price_fetcher.infrastructure.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,36 +13,24 @@ import lombok.Data;
 @Entity
 @Table(name = "PRICES")  
 @Data
-public class Price {
+public class PriceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty("priceId")
     private Long priceId;
 
-//    @JsonProperty("brandId")
     private int brandId;
-    
 
-//    @JsonProperty("startDate")
     private LocalDateTime startDate;
 
-//    @JsonProperty("endDate")
     private LocalDateTime endDate;
     
-//    @JsonProperty("priceList")
     private int priceList;
     
-
-//    @JsonProperty("productId")
     private int productId;
-    
 
-//    @JsonProperty("priority")
     private int priority;
     
-//    @JsonProperty("price")
     private BigDecimal price;
     
-//    @JsonProperty("curr")
     private String curr;
 }

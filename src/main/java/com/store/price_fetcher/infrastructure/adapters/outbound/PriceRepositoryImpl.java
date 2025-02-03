@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.store.price_fetcher.application.ports.outbounds.PriceRepository;
-import com.store.price_fetcher.domain.entities.Price;
 import com.store.price_fetcher.domain.exceptions.PriceNotFoundException;
+import com.store.price_fetcher.infrastructure.entities.PriceEntity;
 
 @Repository
 public class PriceRepositoryImpl implements PriceRepository {
@@ -18,13 +18,13 @@ public class PriceRepositoryImpl implements PriceRepository {
 
 
         @Override
-        public Optional<Price> findPrice(int productId, int brandId, LocalDateTime dateTime) {
+        public Optional<PriceEntity> findPrice(int productId, int brandId, LocalDateTime dateTime) {
             return Optional.ofNullable(jpaPriceRepository.findPrice(productId, brandId, dateTime)
                     .orElseThrow(() -> new PriceNotFoundException("Price not found for product " + productId + " and brand " + brandId)));
         }
     
     @Override
-    public void save(Price price) {
+    public void save(PriceEntity price) {
         jpaPriceRepository.save(price);
     }
 }

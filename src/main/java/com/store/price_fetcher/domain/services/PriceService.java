@@ -1,4 +1,4 @@
-package com.store.price_fetcher.application.ports.inbound;
+package com.store.price_fetcher.domain.services;
 
 import com.store.price_fetcher.application.dto.PriceDTO;
 import java.time.LocalDateTime;

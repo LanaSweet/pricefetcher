@@ -1,9 +1,10 @@
-package com.store.price_fetcher.infrastructure.adapters.inbound.tasks;
+package com.store.price_fetcher.infrastructure.adapters.tasks;
 
-import com.store.price_fetcher.application.services.PriceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import com.store.price_fetcher.domain.services.PriceServiceImpl;
 
 @Component
 public class CacheEvictionTask {

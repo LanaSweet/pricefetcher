@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.store.price_fetcher.domain.entities.Price;
+import com.store.price_fetcher.infrastructure.entities.PriceEntity;
 
-public interface JpaPriceRepository extends JpaRepository<Price, Long> {
+public interface JpaPriceRepository extends JpaRepository<PriceEntity, Long> {
 
-    @Query("SELECT p FROM Price p WHERE p.productId = :productId AND p.brandId = :brandId " +
+    @Query("SELECT p FROM PriceEntity p WHERE p.productId = :productId AND p.brandId = :brandId " +
            "AND :dateTime BETWEEN p.startDate AND p.endDate ORDER BY p.priority DESC limit 1")
-    Optional<Price> findPrice(@Param("productId") int productId, 
+    Optional<PriceEntity> findPrice(@Param("productId") int productId, 
                               @Param("brandId") int brandId, 
                               @Param("dateTime") LocalDateTime dateTime);
        
