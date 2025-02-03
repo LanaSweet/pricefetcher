@@ -22,7 +22,7 @@ This project is a Spring Boot microservice that retrieves prices for products wi
 1. Clone the repository:
     ```sh
     git clone https://github.com/LanaSweet/pricefetcher.git
-    cd price-fetching-microservice
+    cd pricefetcher
     ```
 
 2. Build the project:
