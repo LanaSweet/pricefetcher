@@ -9,9 +9,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.store.price_fetcher.application.dto.PriceDTO;
 import com.store.price_fetcher.application.mappers.PriceMapper;
 import com.store.price_fetcher.application.ports.outbounds.PriceRepository;
+import com.store.price_fetcher.domain.PriceDomainObject;
 import com.store.price_fetcher.domain.exceptions.PriceNotFoundException;
 import com.store.price_fetcher.infrastructure.entities.PriceEntity;
 
@@ -29,14 +29,13 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     @Cacheable("prices")
-    public Optional<PriceDTO> getPrice(int productId, int brandId, LocalDateTime dateTime) {
+    public Optional<PriceDomainObject> getPrice(int productId, int brandId, LocalDateTime dateTime) {
         try {
             log.info("Fetching price from database for productId: {} and brandId: {}", productId, brandId);
             Optional<PriceEntity> priceEntity = priceRepository.findPrice(productId, brandId, dateTime);
             if (priceEntity.isPresent()) {
-                PriceDTO priceDTO = priceMapper.toDto(priceMapper.toDomainObject(priceEntity.get()));
-                return Optional.of(priceDTO);
-            } else {
+                return Optional.of(priceMapper.toDomainObject(priceEntity.get()));
+                } else {
                 return Optional.empty();
             }
          } catch (PriceNotFoundException e) {

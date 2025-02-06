@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.store.price_fetcher.application.dto.PriceDTO;
+import com.store.price_fetcher.application.mappers.PriceMapper;
 import com.store.price_fetcher.application.ports.inbound.PriceControllerPort;
+import com.store.price_fetcher.domain.PriceDomainObject;
 import com.store.price_fetcher.domain.services.PriceService;
 import com.store.price_fetcher.infrastructure.validators.DateTimeValidator;
 
@@ -27,6 +29,10 @@ public class PriceController implements PriceControllerPort{
 
     @Autowired
     private PriceService priceService;
+    
+    @Autowired 
+    private PriceMapper priceMapper;
+
 
     @Override
     @GetMapping("/prices")
@@ -38,16 +44,18 @@ public class PriceController implements PriceControllerPort{
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime dateTimeParsed = LocalDateTime.parse(dateTime, formatter);
-        
-        Optional<PriceDTO> price = priceService.getPrice(productId, brandId, dateTimeParsed);
+  
+        // Get the Optional<Price> from the service
+        Optional<PriceDomainObject> priceOptional = priceService.getPrice(productId, brandId, dateTimeParsed);
 
-
-        if (price.isEmpty()) {
+        if (priceOptional.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        return price.map(ResponseEntity::ok)
-                       .orElseGet(() -> ResponseEntity.notFound().build());
+        // Map the Price to PriceDTO and return it
+        PriceDTO priceDTO = priceMapper.toDto(priceOptional.get());
+        return ResponseEntity.ok(priceDTO);
+
     }
     
 }

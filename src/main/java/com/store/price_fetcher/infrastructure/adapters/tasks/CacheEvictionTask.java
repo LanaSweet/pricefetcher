@@ -17,3 +17,4 @@ public class CacheEvictionTask {
         priceService.clearCache();
     }
 }
+

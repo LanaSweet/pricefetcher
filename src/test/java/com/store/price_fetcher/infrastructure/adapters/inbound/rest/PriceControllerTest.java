@@ -18,51 +18,71 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import com.store.price_fetcher.application.dto.PriceDTO;
+import com.store.price_fetcher.application.mappers.PriceMapper;
+import com.store.price_fetcher.domain.PriceDomainObject;
 import com.store.price_fetcher.domain.services.PriceService;
 
 @ExtendWith(MockitoExtension.class)
 public class PriceControllerTest {
 
-    @Mock
-    private PriceService priceService;
+	@Mock
+	private PriceService priceService;
 
-    @InjectMocks
-    private PriceController priceController;
+	@InjectMocks
+	private PriceController priceController;
 
-    private PriceDTO priceDTO;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	@Mock
+	private PriceMapper priceMapper;
 
-    @BeforeEach
-    public void setUp() {
-        LocalDateTime dateTime = LocalDateTime.now();
-        priceDTO = new PriceDTO();
-        priceDTO.setBrandId(1);
-        priceDTO.setProductId(1);
-        priceDTO.setStartDate(dateTime);
-        priceDTO.setEndDate(dateTime.minusMonths(1));
-        priceDTO.setPriceList(1);
-        priceDTO.setPrice(new BigDecimal(100.0));
-        priceDTO.setCurr("USD");
-    }
+	private PriceDomainObject price;
 
-    @Test
-    public void testGetPrice() {
-        LocalDateTime dateTimeParsed = LocalDateTime.parse("2025-01-14T10:00:00", formatter);
+	private PriceDTO priceDTO;
 
-        when(priceService.getPrice(1, 1, dateTimeParsed)).thenReturn(Optional.of(priceDTO));
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        ResponseEntity<PriceDTO> response = priceController.getPrice(1, 1, "2025-01-14T10:00:00");
+	@BeforeEach
+	public void setUp() {
+		LocalDateTime dateTime = LocalDateTime.now();
+		price = new PriceDomainObject();
+		price.setBrandId(1);
+		price.setProductId(1);
+		price.setStartDate(dateTime);
+		price.setEndDate(dateTime.minusMonths(1));
+		price.setPriceList("1");
+		price.setPrice(new BigDecimal(100.0));
+		price.setCurr("USD");
 
-        assertEquals(ResponseEntity.ok(priceDTO), response);
-    }
 
-    @Test
-    public void testGetPrice_NotFound() {
-        LocalDateTime dateTimeParsed = LocalDateTime.parse("2024-01-14T10:00:00", formatter);
-        when(priceService.getPrice(1, 1, dateTimeParsed)).thenReturn(Optional.empty());
 
-        ResponseEntity<PriceDTO> response = priceController.getPrice(1, 1, "2024-01-14T10:00:00");
+		priceDTO = new PriceDTO();
+		priceDTO.setBrandId(1);
+		priceDTO.setProductId(1);
+		priceDTO.setStartDate(dateTime);
+		priceDTO.setEndDate(dateTime.minusMonths(1));
+		priceDTO.setPriceList(1);
+		priceDTO.setPrice(new BigDecimal(100.0));
+		priceDTO.setCurr("USD");
+	}
 
-        assertEquals(ResponseEntity.noContent().build(), response);
-    }
+
+	@Test
+	public void testGetPrice() {
+		LocalDateTime dateTimeParsed = LocalDateTime.parse("2025-01-14T10:00:00", formatter);
+
+		when(priceService.getPrice(1, 1, dateTimeParsed)).thenReturn(Optional.of(price));
+		when(priceMapper.toDto(price)).thenReturn(priceDTO);
+		ResponseEntity<PriceDTO> response = priceController.getPrice(1, 1, "2025-01-14T10:00:00");
+
+		assertEquals(ResponseEntity.ok(priceDTO), response);
+	}
+
+	@Test
+	public void testGetPrice_NotFound() {
+		LocalDateTime dateTimeParsed = LocalDateTime.parse("2024-01-14T10:00:00", formatter);
+		when(priceService.getPrice(1, 1, dateTimeParsed)).thenReturn(Optional.empty());
+
+		ResponseEntity<PriceDTO> response = priceController.getPrice(1, 1, "2024-01-14T10:00:00");
+
+		assertEquals(ResponseEntity.noContent().build(), response);
+	}
 }

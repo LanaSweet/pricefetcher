@@ -18,9 +18,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.store.price_fetcher.application.dto.PriceDTO;
 import com.store.price_fetcher.application.mappers.PriceMapper;
 import com.store.price_fetcher.application.ports.outbounds.PriceRepository;
+import com.store.price_fetcher.domain.PriceDomainObject;
 import com.store.price_fetcher.domain.services.PriceServiceImpl;
 import com.store.price_fetcher.infrastructure.entities.PriceEntity;
 
@@ -37,7 +37,7 @@ public class PriceServiceImplTest {
     private PriceServiceImpl priceService;
 
     private PriceEntity priceEntity;
-    private PriceDTO priceDTO;
+    private PriceDomainObject priceDomainObject;
     private LocalDateTime dateTime;
 
     @BeforeEach
@@ -53,23 +53,23 @@ public class PriceServiceImplTest {
         priceEntity.setPrice(new BigDecimal(100.0));
         priceEntity.setCurr("USD");
 
-        priceDTO = new PriceDTO();
-        priceDTO.setBrandId(1);
-        priceDTO.setProductId(1);
-        priceDTO.setStartDate(priceEntity.getStartDate());
-        priceDTO.setPrice(new BigDecimal(100.0));
-        priceDTO.setCurr("USD");
+        priceDomainObject = new PriceDomainObject();
+        priceDomainObject.setBrandId(1);
+        priceDomainObject.setProductId(1);
+        priceDomainObject.setStartDate(priceEntity.getStartDate());
+        priceDomainObject.setPrice(new BigDecimal(100.0));
+        priceDomainObject.setCurr("USD");
     }
 
     @Test
     public void testGetPrice() {
         when(priceRepository.findPrice(1, 1, dateTime)).thenReturn(Optional.of(priceEntity));
-        when(priceMapper.toDto(priceMapper.toDomainObject(priceEntity))).thenReturn(priceDTO);
+        when(priceMapper.toDomainObject(priceEntity)).thenReturn(priceDomainObject);
 
-        Optional<PriceDTO> result = priceService.getPrice(1, 1, dateTime);
+        Optional<PriceDomainObject> result = priceService.getPrice(1, 1, dateTime);
 
         assertTrue(result.isPresent());
-        assertEquals(priceDTO, result.get());
+        assertEquals(priceDomainObject, result.get());
 
         verify(priceRepository, times(1)).findPrice(1, 1, dateTime);
     }
@@ -78,7 +78,7 @@ public class PriceServiceImplTest {
     public void testGetPrice_NotFound() {
         when(priceRepository.findPrice(1, 1, dateTime)).thenReturn(Optional.empty());
 
-        Optional<PriceDTO> result = priceService.getPrice(1, 1, dateTime);
+        Optional<PriceDomainObject> result = priceService.getPrice(1, 1, dateTime);
 
         assertFalse(result.isPresent());
 
